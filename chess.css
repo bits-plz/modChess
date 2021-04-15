@@ -1,0 +1,49 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+button{
+    border: 0;
+    padding: 0; 
+    background: none;
+}
+body{
+    background: linear-gradient(180deg, black ,white);
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+h1, h2, h3, h4, h5, h6{
+    font-family: 'RocknRoll One', sans-serif;
+}
+#la, #lu{
+    left: 200px;
+    position: absolute;
+    transform: translateY(50%)
+}
+#ra, #ru{
+    position: absolute;
+    right: 200px;
+    transform: translateY(50%);
+}
+#lu, #ru{
+    top: 50%;
+    transform: translateY(100%);;
+}
+
+#chess{
+    border: 4px solid black;
+    margin: 0px;
+    padding: 0px;
+}
+@media screen and (max-width:1200px) {
+    #la{
+        display: none;
+    }
+    #ra{
+        display: none;
+    }
+}

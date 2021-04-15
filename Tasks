@@ -1,0 +1,23 @@
+highlighting the current selected piece
+
+if it is a white piece make a small black circle on the canvas
+if white then make a white circle                                                       DONE
+
+standard notation board implementation                                                  DONE
+stack of moves implementation so that we can go back and forth        
+    Well for now i can just maintain a move list , you can go bac and forth till last played move,
+    but once you make a new move all the moves from that point on gets spliced and the new move is added to move list.
+    well it should be like if white likes to go back he can and so can white, but white can't undo black's move
+    and when white undoes then there should be a button that white requests black to also undo, but it is upto him, he may choose
+    not to do so, as these UNDOs will have a cost to them 
+    it will be a point based game, winning like in normal chess will give 1000 points,
+    undo costs 50 points, and so on 
+
+        Capturing queen gives 500 points
+        Capturing bishop 100 points
+        Capturing knight 50 points
+        Capturing  rook 120 points.
+
+        So you see even if you win if the opponent captures more valuable pieces chances are that he can also win the game.
+        like normally it's the game of points and it is 
+move Tree so that we can branch out from a particular move and 
