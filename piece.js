@@ -189,3 +189,16 @@ class Piece{
         }
     }
 }
+
+class moddedPiece{
+    constructor(name, x, y){
+        if(name.endsWith('p')) {
+            this.firstMove=0;
+            this.doubleMove=0;
+        }
+        if(name.endsWith('k') || name.endsWith('r')) this.canCastle= true;
+        this.name = name;
+        this.x=x;
+        this.y=y;
+    }
+}

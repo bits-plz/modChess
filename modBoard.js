@@ -16,7 +16,6 @@
 
 // REMEMBER WE FILLING from bottom to up
 // fill in the board
-const EMPTY="";
 //animation loop
 const colors ={0:'#fff', 1: '#000'};
 //const colors={0:"#ffb366",1:"#663500"};
@@ -70,7 +69,7 @@ for(let j=0; j<8;++j){
 let standardConfig = "a1WR,a2WP,a3-a6EE,a7BP,a8BR,b1WN,b2WP,b3-b6EE,b7BP,b8BN,c1WB,c2WP,c3-c6EE,c7BP,c8BB,d1WQ,d2WP,d3-d6EE,d7BP,d8BQ,e1WK,e2WP,e3-e6EE,e7BP,e8BK,f1WB,f2WP,f3-f6EE,f7BP,f8BB,g1WN,g2WP,g3-g6EE,g7BP,g8BN,h1WR,h2WP,h3-h6EE,h7BP,h8BR";
 
 standardConfig = standardConfig.split(',');
-
+for(let u=0; u<standardConfig.length ;u++) standardConfig[u]= standardConfig[u].trim();
 // it may happen someone gave a range a3-a5EE then a4BP , that's completely fine
 
 for(let e= 0; e<standardConfig.length ; ++e){
@@ -84,13 +83,30 @@ for(let e= 0; e<standardConfig.length ; ++e){
         for(let x1= xStart; x1<=xEnd ;++x1){
             for(let y1= yStart; y1<=yEnd ;++y1){
                 mboard[y1][x1][1]= (piece == "EE" ) ? EMPTY : new Piece(sprites[pieceMap[piece]] , x1 , y1);
+                if(piece != "EE"){
+                    if(piece[0] == 'W'){
+                        piece = mboard[y1][x1][1];
+                        whitePieces.push(new moddedPiece(piece.piece.name, y1, x1));
+                    }else{
+                        piece = mboard[y1][x1][1];
+                        blackPieces.push(new moddedPiece(piece.piece.name, y1, x1));
+                    }
+                }
             }
         }
 
     }else{
         let piece= conf.substr(2,2);
         mboard[yStart][xStart][1]= (piece=="EE")? EMPTY : new Piece(sprites[pieceMap[piece]] , xStart, yStart);
+        if(piece != "EE"){
+            if(piece[0] == 'W'){
+                piece = mboard[yStart][xStart][1];
+                whitePieces.push(new moddedPiece(piece.piece.name, yStart, xStart));
+            }else{
+                piece = mboard[yStart][xStart][1];
+                blackPieces.push(new moddedPiece(piece.piece.name, yStart, xStart));
+            }
+        }
     }
 }
-
-board= mboard;
+let wbMap = {0: blackPieces, 1: whitePieces}; 

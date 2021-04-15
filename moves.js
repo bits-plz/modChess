@@ -13,6 +13,7 @@ class Move{
 }
 
 function undoLast(move){
+    console.log(move);
     // move back the moved piece where it's source was
     let dx= move.dx; let dy= move.dy;
     // decolor this one
@@ -25,7 +26,7 @@ function undoLast(move){
     ctx.drawImage(move.piece.piece.img, sx*SQ+15, sy*SQ+15, 50,50);
     
     board[sy][sx][1]= move.piece;
-    board[sy][sx][1].x = sx; board[sy][sx][1]= sy;
+    board[sy][sx][1].x = sx; board[sy][sx][1].y= sy;
     // if any piece was captured redraw it 
     if(move.xpiece){
         // only here we need to repaint it whole 
@@ -36,13 +37,6 @@ function undoLast(move){
         ctx.fillStyle= colors[board[dy][dx][0]];
         ctx.fillRect(dx*SQ, dy*SQ, SQ, SQ);
         ctx.drawImage(move.xpiece.piece.img, dx*SQ+15, dy*SQ+15, 50,50);
-        let piece= move.xpiece.piece.name[1];
-        // subtract the points gained by capturing the piece
-        if(currPlayer == 1 ){
-            WhitePoints -= scores[piece];
-        }else{
-            BlackPoints -= scores[piece];
-        }
 
     }
 

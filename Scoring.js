@@ -36,10 +36,12 @@ let prevW= WhitePoints;
 
 setInterval(()=>{
     if(prevB != BlackPoints){
+        console.log('called');
         black.innerHTML = BlackPoints;
         prevB = BlackPoints;
     }
     if(prevW != WhitePoints){
+        console.log('called');
         white.innerHTML = WhitePoints;
         prevW = WhitePoints;
     }

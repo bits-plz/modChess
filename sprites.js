@@ -1,3 +1,4 @@
+const EMPTY="";
 const img_folder="./assets/images/"
 
 class Sprite{

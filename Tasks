@@ -2,9 +2,9 @@ highlighting the current selected piece
 
 if it is a white piece make a small black circle on the canvas
 if white then make a white circle                                                       DONE
-
 standard notation board implementation                                                  DONE
-stack of moves implementation so that we can go back and forth        
+stack of moves implementation so that we can go back and forth                          DONE
+
     Well for now i can just maintain a move list , you can go bac and forth till last played move,
     but once you make a new move all the moves from that point on gets spliced and the new move is added to move list.
     well it should be like if white likes to go back he can and so can white, but white can't undo black's move
@@ -20,4 +20,11 @@ stack of moves implementation so that we can go back and forth
 
         So you see even if you win if the opponent captures more valuable pieces chances are that he can also win the game.
         like normally it's the game of points and it is 
-move Tree so that we can branch out from a particular move and 
+* [Advanced later implementation] move Tree so that we can branch out from a particular move and 
+
+Modify the castelling logic king can't pass through any point that is being attacked 
+
+Scoring logic is buggy !! 
+
+implementation of modded piece as we don't care about most of the other properties like img, img_url, all functions associated
+

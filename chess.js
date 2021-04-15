@@ -14,8 +14,6 @@ canvas.style.padding=0;
 canvas.style.margin=0;
 
 
-
-
 const SQ=80;
 const ROW=8;
 const COL=8;
@@ -28,7 +26,7 @@ function drawSquare(x,y,color){
     ctx.fillRect(x*SQ,y*SQ, SQ, SQ);
 }
 
-let board=mboard;
+let board=mboard; // get board config from the boardConfig string .
 
 for(let i=0; i<8; i++){
     for(let j=0; j<8;++j) drawSquare(j, i, colors[board[j][i][0]]);
@@ -220,6 +218,9 @@ function inCheck(king, x, y, xpiece){
     return restoreStatus(xpiece, x, y,opiece, false, kx, ky);
 }
 
+
+// copy function of incheck for testing purposes only
+
 function softCheck(this_king){
     // you can't castle if you are in check , this function doesn't need x, y, xpiece 
 
@@ -349,7 +350,7 @@ function softCheck(this_king){
 }
 
 
-
+// not only gets to check enPassant but also changes the capturedPiece
 function enPassant(x, y){
     // selectedPiece is already available
     
@@ -362,7 +363,7 @@ function enPassant(x, y){
         else if(pawn.doubleMove==0) return false;
         
         else {
-            capturedPiece= board[y+1][x][1];
+            if(!allMoveCall)capturedPiece= board[y+1][x][1];
             return true;
         }
     }else{
@@ -370,7 +371,7 @@ function enPassant(x, y){
         if(pawn.piece.name[1] != 'p') return false; // filtered out 
         else if(pawn.doubleMove == 0) return false;
         else {
-            capturedPiece= board[y-1][x][1];
+            if(!allMoveCall) capturedPiece= board[y-1][x][1];
             return true;
         }
     }
@@ -476,12 +477,7 @@ function castelling(x, y){
 
 
 function pawnMove(piece, yy, xx){
-    // WIll handle EN passant later
-    // it is a special pawn move
-    // it can capture a pawn immediately after that pawn has made two steps, i.e. it gets unlocked only after that
-    // how to handle it
-    // if on exact left and exact right is a pawn that made 2step stride
-    //we can treat that pawn 
+
     if(piece.x== xx){ // same column
         if(piece.firstMove==0){
             if(Math.abs(yy- piece.y) ==2) piece.doubleMove++;
@@ -502,10 +498,8 @@ function pawnMove(piece, yy, xx){
             // !is SameType and is not empty
            
             if(piece.piece.name.startsWith('w') ){
-               piece.doubleMove=0;
             return yy-piece.y ==-1 && Math.abs(xx- piece.x) ==1;
            }else{
-               piece.doubleMove=0;
             return yy-piece.y ==1 && Math.abs(xx- piece.x) ==1;
            }
             
@@ -610,18 +604,13 @@ canvas.addEventListener('mousedown', (ev)=>{
 const la= document.getElementById('lu');
 const ra= document.getElementById('ru');
 
-let movCount= moves.length-1; // that is the index of the last move
-// depending on what we seek we can go anywhere 
-// if moveCount is same as move.length-1 we can't get ahead
-// it may happen that after undoing we did a new move , the way to encounter that is
-// when pressed these buttons once the next move is different that is moves[-1]!= moves[-2], we need to splice this -2 one
-// or we can implement a move tree that will go down different path now 
+
 la.addEventListener('click', ()=>{
     // undo last move
     if(moves.length ==0) return; // can't do anything about it
     if(moves.length%2 !=0 ) return ; // it was white's turn  
     undoLast(moves[moves.length-1]);
-    BlackPoints -= 50;
+    BlackPoints =prevB -50;
     moves.pop();
     currPlayer =0; // black's turn again
 
@@ -632,7 +621,7 @@ ra.addEventListener('click', ()=>{
     if(moves.length ==0) return; // can't do anything about it
     if(moves.length%2 ==0 ) return ; // it was black's turn  
     undoLast(moves[moves.length-1]);
-    WhitePoints -=50;
+    WhitePoints = prevW -50 ;
     moves.pop();
     currPlayer =1; // white's turn again
 });
