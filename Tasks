@@ -24,7 +24,11 @@ stack of moves implementation so that we can go back and forth                  
 
 Modify the castelling logic king can't pass through any point that is being attacked 
 
-Scoring logic is buggy !! 
+Scoring logic is buggy !! (prevScores :( )                                                              TO DO 
 
-implementation of modded piece as we don't care about most of the other properties like img, img_url, all functions associated
+implementation of modded piece as we don't care about 
+most of the other properties like img, img_url, all functions associated                                DONE
 
+The pieces in white, black can be stored in a map and then it can contain arrays, 
+so that when later a piece is killed it can be easily                                                   TO DO
+removed after just querying on the x- coordinate, and finding apt y-coordinate,

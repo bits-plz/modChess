@@ -65,33 +65,48 @@ function allMoves(){
             if(currPlayer == 1){
                 p = 1;
             }else p =-1;
-
             if(e[i].firstMove == 0) addTovalidMoves(king, px, py-2*p, e[i]);
             addTovalidMoves(king, px, py-1, e[i]);
-            if(bounds(px+1, py-p) && board[py-p][px+1][1] != EMPTY)addTovalidMoves(king, px+1, py-p, e[i]);
-            if(bounds(px-1, py-p) && board[py-p][px-1][1] != EMPTY)addTovalidMoves(king, px-1, py-p, e[i]);
+            if(px+1<COL && board[py-p][px+1][1] != EMPTY && !board[py][px][1].isSameType(px+1, py-p)) addTovalidMoves(king, px+1, py-p, e[i]);
+            if(px-1>=0 && board[py-p][px-1][1] != EMPTY && !board[py][px][1].isSameType(px-1, py-p))(king, px-1, py-p, e[i]);
 
         }else{
             // diagonals 
             if(piece =='q' || piece =='b'){
                 // diag 1 below
                 for(let dx =1, dy=1; dx< COL-px && dy<ROW- py; dx++, dy++){
-                    if(board[py+dy][px+dx][1] !=EMPTY ) break;
+                    if(board[py+dy][px+dx][1] !=EMPTY ) {
+                        if(board[py][px][1].isSameType(px+dx, py+dy)) break ;
+                        addTovalidMoves(king, px+dx, py+dy , e[i]); // last piece it can attack
+                        break;
+                    }
                     addTovalidMoves(king, px+dx, py+dy , e[i]);
                 }
                 // diag 1 above
                 for(let dx =-1, dy=-1; dx>= -px && dy>= -py; dx--, dy--){
-                    if(board[py+dy][px+dx][1] !=EMPTY ) break;
+                    if(board[py+dy][px+dx][1] !=EMPTY ) {
+                        if(board[py][px][1].isSameType(px+dx, py+dy)) break ;
+                        addTovalidMoves(king, px+dx, py+dy , e[i]); // last piece it can attack
+                        break;
+                    }
                     addTovalidMoves(king, px+dx, py+dy , e[i]);
                 }
                 // diag 2 above
                 for(let dx =1, dy=-1; dx< COL-px && dy>= -py; dx++, dy--){
-                    if(board[py+dy][px+dx][1] !=EMPTY ) break;
+                    if(board[py+dy][px+dx][1] !=EMPTY ) {
+                        if(board[py][px][1].isSameType(px+dx, py+dy)) break ;
+                        addTovalidMoves(king, px+dx, py+dy , e[i]); // last piece it can attack
+                        break;
+                    }
                     addTovalidMoves(king, px+dx, py+dy , e[i]);
                 }
                 // diag 2 below
                 for(let dx =-1, dy=1; dx>= -px && dy<ROW- py; dx--, dy++){
-                    if(board[py+dy][px+dx][1] !=EMPTY ) break;
+                    if(board[py+dy][px+dx][1] !=EMPTY ) {
+                        if(board[py][px][1].isSameType(px+dx, py+dy)) break ;
+                        addTovalidMoves(king, px+dx, py+dy , e[i]); // last piece it can attack
+                        break;
+                    }
                     addTovalidMoves(king, px+dx, py+dy , e[i]);
                 }
             }
@@ -100,31 +115,47 @@ function allMoves(){
                 // all the squares up down left right until a piece obstructs
                 // check right
                 for(let dx= 1; dx< COL-px ; dx++){
-                    if(board[py][px+dx][1] !=EMPTY ) break;
+                    if(board[py][px+dx][1] !=EMPTY ) {
+                        if(board[py][px][1].isSameType(px+dx, py)) break ;
+                        addTovalidMoves(king, px+dx, py+dy , e[i]); // last piece it can attack
+                        break;
+                    }
                     addTovalidMoves(king, px+dx , py , e[i]);
                 }
                 //check left
                 for(let dx= -1; dx>=-px ; dx--){
-                    if(board[py][px+dx][1] !=EMPTY ) break;
+                    if(board[py][px+dx][1] !=EMPTY ) {
+                        if(board[py][px][1].isSameType(px+dx, py)) break ;
+                        addTovalidMoves(king, px+dx, py , e[i]); // last piece it can attack
+                        break;
+                    }
                     addTovalidMoves(king, px+dx , py , e[i]);
                 }
                 // check down
                 for(let dy= 1; dy< ROW-py ; dy++){
-                    if(board[py+dy][px][1] !=EMPTY ) break;
+                    if(board[py+dy][px][1] !=EMPTY ) {
+                        if(board[py][px][1].isSameType(px,py+dy)) break ;
+                        addTovalidMoves(king, px, py+dy , e[i]); // last piece it can attack
+                        break;
+                    }
                     addTovalidMoves(king, px , py+dy , e[i]);
                 }
                 //check up
                 for(let dy= -1; dy>=-py ; dy--){
-                    if(board[py+dy][px][1] != EMPTY ) break;
+                    if(board[py+dy][px][1] !=EMPTY ) {
+                        if(board[py][px][1].isSameType(px, py+dy)) break ;
+                        addTovalidMoves(king, px, py+dy , e[i]); // last piece it can attack
+                        break;
+                    }
                     addTovalidMoves(king, px , py+dy , e[i]);
                 }
             }
             // good ol' knight moves
             if(piece =='n'){
                 for(let j=0; j< nxMoves.length ; ++j){
-                    let x1= px+ nxMoves[i]; 
-                    let y1= py+ nyMoves[i];
-                    if(bounds(x1, y1) && board[y1][x1][1] != EMPTY) continue ; // can't add this one
+                    let x1= px+ nxMoves[j]; 
+                    let y1= py+ nyMoves[j];
+                    if(bounds(x1, y1) && board[py][px][1].isSameType(x1, y1)) continue ;
                     addTovalidMoves(king, x1, y1, e[i]);
                 }
             }

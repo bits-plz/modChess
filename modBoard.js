@@ -86,10 +86,10 @@ for(let e= 0; e<standardConfig.length ; ++e){
                 if(piece != "EE"){
                     if(piece[0] == 'W'){
                         piece = mboard[y1][x1][1];
-                        whitePieces.push(new moddedPiece(piece.piece.name, y1, x1));
+                        whitePieces.push(new moddedPiece(piece.piece.name, x1, y1));
                     }else{
                         piece = mboard[y1][x1][1];
-                        blackPieces.push(new moddedPiece(piece.piece.name, y1, x1));
+                        blackPieces.push(new moddedPiece(piece.piece.name, x1, y1));
                     }
                 }
             }
@@ -101,10 +101,10 @@ for(let e= 0; e<standardConfig.length ; ++e){
         if(piece != "EE"){
             if(piece[0] == 'W'){
                 piece = mboard[yStart][xStart][1];
-                whitePieces.push(new moddedPiece(piece.piece.name, yStart, xStart));
+                whitePieces.push(new moddedPiece(piece.piece.name,  xStart, yStart));
             }else{
                 piece = mboard[yStart][xStart][1];
-                blackPieces.push(new moddedPiece(piece.piece.name, yStart, xStart));
+                blackPieces.push(new moddedPiece(piece.piece.name, xStart , yStart));
             }
         }
     }
