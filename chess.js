@@ -381,6 +381,17 @@ function swapPieces(){
 
 }
 
+function validCastelling(x, y, p){
+    // king mustn't pass through any squares that are in attack, based on p we can judge
+    // if p ==1 it is o-o castelling
+    // if p==-1 it is o-o-o castelling
+    for(let i=1 ; i<=2; i++) if(inCheck(Klist[currPlayer], x+p*i, y, Klist[currPlayer])) return false;
+
+    return true;
+
+}
+
+let casteleFlag= false;
 
 function castelling(x, y){
     if(softCheck(Klist[currPlayer])) return false; // can't castle when already in check
@@ -395,9 +406,11 @@ function castelling(x, y){
         
         if((x == sx +2 && board[y][x+1][1].canCastle )){
             for(let xx= sx+1 ; xx<=x ;++xx) if(board[y][xx][1] != EMPTY) return false;
-
+            if(!validCastelling(sx, sy, 1)) return false; // don't proceed
+            casteleFlag= true;
             // have to castle
             board[y][x+1][1].canCastle= false;
+
             // clear the old king's location
             ctx.clearRect(sx*SQ, sy*SQ, SQ, SQ);
             ctx.fillStyle= colors[board[sx][sy][0]];
@@ -423,13 +436,16 @@ function castelling(x, y){
             ctx.fillStyle = colors[board[y][x+1][0]];
             ctx.fillRect((x+1)*SQ, y*SQ, SQ, SQ);
             
+            moves.push(new Move(Klist[currPlayer], sx, sy, x, sy, board[sy][x+1][1]));
+
             ctx.drawImage(board[y][x+1][1].piece.img, (x-1)*SQ+15 , y*SQ+15, 50 ,50);
             board[y][x-1][1]=board[y][x+1][1]; board[y][x-1][1].x = x-1; 
             board[y][x+1][1]= EMPTY;
 
         }else if((x== sx -2 && board[y][x-2][1].canCastle)){
             for(let xx= sx-1 ; xx>=x ;xx--) if(board[y][xx][1] != EMPTY) return false;
-
+            if(!validCastelling(sx , sy, -1)) return false; // don't castle 
+            casteleFlag= true;
             // have to castle
             board[y][x-2][1].canCastle= false;
 
@@ -457,6 +473,8 @@ function castelling(x, y){
             ctx.fillStyle = colors[board[y][x+1][0]];
             ctx.fillRect(x*SQ+SQ, y*SQ, SQ, SQ);
             ctx.drawImage(board[y][x-2][1].piece.img, (x+1)*SQ+15 , y*SQ+15, 50 ,50);
+            
+            moves.push(new Move(Klist[currPlayer], sx, sy, x, sy, board[sy][x-2][1]));
             board[y][x+1][1]=board[y][x-2][1]; board[y][x+1][1].x = x+1;
             board[y][x-2][1]= EMPTY;
             
@@ -518,13 +536,11 @@ function drawBoard(){
 drawBoard();
 
 function modClearRect(x, y){
-    // clear left rectangle
     let color = colors[board[y][x][0]];
     ctx.fillStyle= color;
     ctx.clearRect(x*SQ, y*SQ, SQ, SQ);
     ctx.fillRect(x*SQ, y*SQ, SQ, SQ);
     ctx.drawImage(board[y][x][1].piece.img, x*SQ+15, y*SQ+15, 50, 50);
-    //fill bottom rectangle
 }
 
 function highlight(x, y){
@@ -578,8 +594,9 @@ canvas.addEventListener('mousedown', (ev)=>{
             selectedPiece= board[y][x][1];
         }else if(moveOn ==1 && board[y][x][1] == EMPTY){
             if(selectedPiece.move(x, y, colors[board[y][x][0]])){
-                moves.push(new Move(selectedPiece, prev_x, prev_y, x, y ,capturedPiece)); // empty square move
-                if(capturedPiece) scoreEm(capturedPiece);
+               if(!casteleFlag) moves.push(new Move(selectedPiece, prev_x, prev_y, x, y ,capturedPiece)); // empty square move
+               if(casteleFlag) casteleFlag= false; 
+               if(capturedPiece) scoreEm(capturedPiece);
                 moveOn=0; selectedPiece=EMPTY;
                 currPlayer = (currPlayer == 1) ? 0: 1;
                 capturedPiece=null;
@@ -607,22 +624,20 @@ const ra= document.getElementById('ru');
 
 la.addEventListener('click', ()=>{
     // undo last move
+    currPlayer =0;
     if(moves.length ==0) return; // can't do anything about it
     if(moves.length%2 !=0 ) return ; // it was white's turn  
     undoLast(moves[moves.length-1]);
-    BlackPoints =prevB -50;
     moves.pop();
-    currPlayer =0; // black's turn again
-
+     // black's turn again
 });
 
 ra.addEventListener('click', ()=>{
+    currPlayer =1;
     // redo last move if can 
     if(moves.length ==0) return; // can't do anything about it
     if(moves.length%2 ==0 ) return ; // it was black's turn  
     undoLast(moves[moves.length-1]);
-    WhitePoints = prevW -50 ;
     moves.pop();
     currPlayer =1; // white's turn again
 });
-//900

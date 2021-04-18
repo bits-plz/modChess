@@ -22,13 +22,15 @@ stack of moves implementation so that we can go back and forth                  
         like normally it's the game of points and it is 
 * [Advanced later implementation] move Tree so that we can branch out from a particular move and 
 
-Modify the castelling logic king can't pass through any point that is being attacked 
+Modify the castelling logic king can't pass through any point that is being attacked                    DONE
 
-Scoring logic is buggy !! (prevScores :( )                                                              TO DO 
+Scoring logic is buggy !! (prevScores :( )                                                              DONE
 
 implementation of modded piece as we don't care about 
 most of the other properties like img, img_url, all functions associated                                DONE
 
 The pieces in white, black can be stored in a map and then it can contain arrays, 
 so that when later a piece is killed it can be easily                                                   TO DO
-removed after just querying on the x- coordinate, and finding apt y-coordinate,
+removed after just querying on the x- coordinate, and finding apt y-coordinate
+
+highlighting the attack squares for particular piece
