@@ -82,7 +82,7 @@ for(let e= 0; e<standardConfig.length ; ++e){
         let piece= conf.substr(5,2);
         for(let x1= xStart; x1<=xEnd ;++x1){
             for(let y1= yStart; y1<=yEnd ;++y1){
-                mboard[y1][x1][1]= (piece == "EE" ) ? EMPTY : new Piece(sprites[pieceMap[piece]] , x1 , y1);
+                mboard[y1][x1][1]= (piece == "EE" ) ? EMPTY : new Piece(new Sprite(pieceMap[piece]) , x1 , y1);
                 if(piece != "EE"){
                     if(piece[0] == 'W'){
                         piece = mboard[y1][x1][1];
@@ -97,7 +97,7 @@ for(let e= 0; e<standardConfig.length ; ++e){
 
     }else{
         let piece= conf.substr(2,2);
-        mboard[yStart][xStart][1]= (piece=="EE")? EMPTY : new Piece(sprites[pieceMap[piece]] , xStart, yStart);
+        mboard[yStart][xStart][1]= (piece=="EE")? EMPTY : new Piece(new Sprite(pieceMap[piece])  , xStart, yStart);
         if(piece != "EE"){
             if(piece[0] == 'W'){
                 piece = mboard[yStart][xStart][1];

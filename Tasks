@@ -20,6 +20,8 @@ stack of moves implementation so that we can go back and forth                  
 
         So you see even if you win if the opponent captures more valuable pieces chances are that he can also win the game.
         like normally it's the game of points and it is 
+
+
 * [Advanced later implementation] move Tree so that we can branch out from a particular move and 
 
 Modify the castelling logic king can't pass through any point that is being attacked                    DONE
@@ -33,4 +35,10 @@ The pieces in white, black can be stored in a map and then it can contain arrays
 so that when later a piece is killed it can be easily                                                   TO DO
 removed after just querying on the x- coordinate, and finding apt y-coordinate
 
-highlighting the attack squares for particular piece
+highlighting the attack squares for particular piece                                                    DONE
+
+pawn Promotion                                                                                          DONE
+Show the rectangle that contain the options for pawn Promotion
+
+generate paths for possible moves with this piece 
+Re implementation of AllMoves.js
