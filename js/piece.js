@@ -1,4 +1,6 @@
-
+/**
+ * Pieces
+ */
 class Piece{
     constructor(sprite, x, y){
         if(sprite.name.endsWith('p')) {

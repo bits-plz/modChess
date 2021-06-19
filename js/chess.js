@@ -1,17 +1,25 @@
 'use strict'
-
+function createCanvas(width, height, set2dTransform = true) {
+    const ratio = Math.ceil(window.devicePixelRatio);
+    const canvas = document.createElement('canvas');
+    canvas.style.width= `${width}px`;
+    canvas.style.height=`${height}px`;
+    canvas.width = width * ratio;
+    canvas.height = height * ratio;
+    if (set2dTransform) {
+      canvas.getContext('2d').setTransform(ratio, 0, 0, ratio, 0, 0);
+    }
+    return canvas;
+}
 //canvas setup
 
-const canvas= document.createElement('canvas');
+const canvas= createCanvas(640, 640);
 canvas.id='chess'
 canvas.style.zIndex=1;
 document.body.appendChild(canvas);
 const ctx= canvas.getContext('2d');
 ctx.imageSmoothingEnabled= true;
-canvas.width=640;
-canvas.height=640;
-canvas.style.padding=0;
-canvas.style.margin=0;
+
 
 
 const SQ=80;
